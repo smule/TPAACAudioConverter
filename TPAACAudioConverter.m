@@ -160,7 +160,7 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
 }
 
 - (void)reportCompletion {
-    if ( _cancelled ) return;
+    //if ( _cancelled ) return;
     [_delegate AACAudioConverterDidFinishConversion:self];
     if ( _priorMixOverrideValue != NO ) {
         UInt32 allowMixing = _priorMixOverrideValue;
@@ -170,7 +170,7 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
 }
 
 - (void)reportErrorAndCleanup:(NSError*)error {
-    if ( _cancelled ) return;
+    //if ( _cancelled ) return;
     [[NSFileManager defaultManager] removeItemAtPath:_destination error:NULL];
     if ( _priorMixOverrideValue != NO ) {
         UInt32 allowMixing = _priorMixOverrideValue;
@@ -400,9 +400,9 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
         
         if ( _cancelled ) {
             [[NSFileManager defaultManager] removeItemAtPath:_destination error:NULL];
-        } else {
-            [self performSelectorOnMainThread:@selector(reportCompletion) withObject:nil waitUntilDone:NO];
         }
+        
+        [self performSelectorOnMainThread:@selector(reportCompletion) withObject:nil waitUntilDone:NO];
         
         _processing = NO;
     }
