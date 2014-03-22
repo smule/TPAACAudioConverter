@@ -131,9 +131,14 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
 
 -(void)cancel {
     _cancelled = YES;
-    while ( _processing ) {
-        [NSThread sleepForTimeInterval:0.01];
-    }
+    //mtg: so since we're calling our delegate methods on cancel now anyway,
+    //we don't actually want to block here until the flag is false
+    //there was a weird bug where the object was freed (?) in the while,
+    //so the _processing flag was just junk
+    //sleep spins are gross anyway
+//    while ( _processing ) {
+//        [NSThread sleepForTimeInterval:0.01];
+//    }
     if ( _priorMixOverrideValue != NO ) {
         UInt32 allowMixing = _priorMixOverrideValue;
         checkResult(AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof (allowMixing), &allowMixing),
