@@ -34,7 +34,7 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
 }
 @property (nonatomic, readwrite, retain) NSString *source;
 @property (nonatomic, readwrite, retain) NSString *destination;
-@property (nonatomic, assign) id<TPAACAudioConverterDelegate> delegate;
+@property (nonatomic, weak) id<TPAACAudioConverterDelegate> delegate;
 @property (nonatomic, retain) id<TPAACAudioConverterDataSource> dataSource;
 @end
 
