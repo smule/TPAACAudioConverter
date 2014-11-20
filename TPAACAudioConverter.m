@@ -5,6 +5,8 @@
 //  Copyright 2011 A Tasty Pixel. All rights reserved.
 //
 
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 #import "TPAACAudioConverter.h"
 #import <AudioToolbox/AudioToolbox.h>
 
@@ -250,12 +252,9 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
             clientFormat = sourceFormat;
         } else {
             memset(&clientFormat, 0, sizeof(clientFormat));
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             int sampleSize = sizeof(AudioSampleType);
             clientFormat.mFormatID = kAudioFormatLinearPCM;
             clientFormat.mFormatFlags = kAudioFormatFlagsCanonical;
-#pragma clang diagnostic pop
             clientFormat.mBitsPerChannel = 8 * sampleSize;
             clientFormat.mChannelsPerFrame = sourceFormat.mChannelsPerFrame;
             clientFormat.mFramesPerPacket = 1;
